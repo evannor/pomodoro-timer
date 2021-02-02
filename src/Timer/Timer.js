@@ -2,12 +2,14 @@ import React, { useState } from "react";
 
 function Timer() {
   let interval;
-  let [seconds, setSeconds] = useState(60);
+  let [seconds, setSeconds] = useState(0);
+  let [shortPomo, setShortPomo] = useState(1500);
 
   function countdown() {
     interval = setInterval(() => {
-      setSeconds(seconds--);
-      if (!seconds) {
+      setSeconds(shortPomo % 60);
+      Math.floor(setShortPomo(shortPomo--));
+      if (!shortPomo) {
         clearInterval(interval);
         alert("Countdown finished");
       }
@@ -18,9 +20,12 @@ function Timer() {
     <div>
       <h3>This is the Short Timer: 25 Minutes</h3>
       <p>Press the button below to start the timer.</p>
-      <button onClick={() => countdown()}>Start the Timer</button>
+      <button onClick={countdown}>Start the Timer</button>
       <br />
-      {seconds}
+      <p>
+        {(shortPomo / 60).toFixed(0)}:{seconds >= 10 ? seconds : "0" + seconds}{" "}
+        left!
+      </p>
     </div>
   );
 }
